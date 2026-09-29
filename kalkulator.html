@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator | NUMÉXA</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 760px; margin: 30px auto; padding: 0 16px; line-height: 1.5; }
+    h1 { margin-bottom: 4px; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; }
+    button { margin-top: 16px; padding: 10px 20px; font: inherit; background: #0f6b5c; color: white; border: 0; border-radius: 6px; cursor: pointer; }
+    #pesan { color: #b3261e; font-weight: bold; }
+    #hasil { display: none; margin-top: 24px; }
+    .besar { font-size: 1.6rem; font-weight: bold; color: #0f6b5c; }
+    .gulir { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 560px; }
+    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: right; }
+    th { background: #e3efeb; }
+    td:first-child, th:first-child { text-align: center; }
+  </style>
+</head>
+<body>
+  <p><a href="index.html">← Kembali ke beranda</a></p>
+  <h1>Kalkulator Anuitas</h1>
+
+  <label for="satuan">Satuan periode</label>
+  <select id="satuan">
+    <option>Hari</option>
+    <option>Minggu</option>
+    <option selected>Bulan</option>
+    <option>Kuartal</option>
+    <option>Semester</option>
+    <option>Tahun</option>
+  </select>
+
+  <label for="pinjaman">Jumlah pinjaman (Rp)</label>
+  <input id="pinjaman" type="number" min="0" step="any" placeholder="contoh: 10000000">
+
+  <label for="bunga" id="labelBunga">Suku bunga (% per Bulan)</label>
+  <input id="bunga" type="number" min="0" step="any" placeholder="contoh: 1.5">
+
+  <label for="lama" id="labelLama">Lama pinjaman (jumlah Bulan)</label>
+  <input id="lama" type="number" min="1" step="1" placeholder="contoh: 24">
+
+  <label for="mode">Pembulatan</label>
+  <select id="mode">
+    <option value="desimal">Desimal (sisa akhir tepat 0)</option>
+    <option value="bulat">Dibulatkan (sisa akhir mendekati 0)</option>
+  </select>
+
+  <button id="hitung" type="button">Hitung</button>
+  <p id="pesan"></p>
+
+  <div id="hasil">
+    <div>Angsuran per <span class="unit"></span>:</div>
+    <div class="besar" id="angsuran"></div>
+    <div class="gulir">
+      <table>
+        <thead>
+          <tr>
+            <th id="kolomPeriode">Bulan</th>
+            <th>Principal payment (Rp)</th>
+            <th>Interest payment (Rp)</th>
+            <th>Annuity (Rp)</th>
+            <th>Remaining balance (Rp)</th>
+          </tr>
+        </thead>
+        <tbody id="isiTabel"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    // Ubah label ikut satuan periode
+    function ubahLabel() {
+      const u = $("satuan").value;
+      $("labelBunga").textContent = "Suku bunga (% per " + u + ")";
+      $("labelLama").textContent = "Lama pinjaman (jumlah " + u + ")";
+    }
+    $("satuan").addEventListener("change", ubahLabel);
+
+    function hitung() {
+      const P = parseFloat($("pinjaman").value);
+      const i = parseFloat($("bunga").value) / 100;
+      const n = parseInt($("lama").value);
+      const u = $("satuan").value;
+      const bulat = $("mode").value === "bulat";
+      $("pesan").textContent = "";
+
+      if (!(P > 0) || isNaN(i) || i < 0 || !(n >= 1)) {
+        $("pesan").textContent = "Isi semua kolom dengan angka yang benar.";
+        $("hasil").style.display = "none";
+        return;
+      }
+
+      // Rumus angsuran tetap
+      let A = i === 0 ? P / n : (P * i) / (1 - Math.pow(1 + i, -n));
+      if (bulat) A = Math.round(A);
+
+      const fmt = x => x.toLocaleString("id-ID", {
+        minimumFractionDigits: bulat ? 0 : 2,
+        maximumFractionDigits: bulat ? 0 : 2
+      });
+
+      let sisa = P;
+      let html = "";
+      for (let k = 1; k <= n; k++) {
+        let bunga = sisa * i;
+        if (bulat) bunga = Math.round(bunga);
+        const pokok = A - bunga;
+        sisa = sisa - pokok;
+        if (Math.abs(sisa) < 1e-6) sisa = 0;
+        html += "<tr><td>" + k + "</td><td>" + fmt(pokok) + "</td><td>" +
+                fmt(bunga) + "</td><td>" + fmt(A) + "</td><td>" + fmt(sisa) + "</td></tr>";
+      }
+
+      document.querySelectorAll(".unit").forEach(e => e.textContent = u);
+      $("kolomPeriode").textContent = u;
+      $("angsuran").textContent = "Rp " + fmt(A);
+      $("isiTabel").innerHTML = html;
+      $("hasil").style.display = "block";
+    }
+    $("hitung").addEventListener("click", hitung);
+  </script>
+</body>
+</html>
