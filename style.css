@@ -50,3 +50,12 @@ tbody tr:nth-child(even) { background: #f6faf8; }
   body { margin: 0; border-radius: 0; box-shadow: none; }
   h1 { font-size: 1.8rem; }
 }
+/* Layar besar (laptop/desktop) */
+@media (min-width: 900px) {
+  body { max-width: 900px; }
+  .navbar .menu a { padding: 10px 18px; }
+}
+/* Layar sangat besar */
+@media (min-width: 1300px) {
+  body { max-width: 1100px; }
+}
