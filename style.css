@@ -81,3 +81,12 @@ tbody tr:nth-child(even) { background: #f6faf8; }
   background: var(--utama);
   color: white;
 }
+/* Kartu anggota dengan foto */
+.anggota { display: flex; align-items: center; gap: 16px; }
+.anggota .foto {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
