@@ -65,3 +65,19 @@ tbody tr:nth-child(even) { background: #f6faf8; }
 @media (min-width: 1300px) {
   body { max-width: 1100px; }
 }
+/* Tombol kembali */
+.kembali {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 18px;
+  border: 1px solid var(--utama);
+  border-radius: 6px;
+  color: var(--utama);
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s, color 0.2s;
+}
+.kembali:hover {
+  background: var(--utama);
+  color: white;
+}
