@@ -1,0 +1,52 @@
+:root {
+  --utama: #0f6b5c;
+  --latar: #eef3f1;
+  --kartu: #ffffff;
+  --garis: #cfdcd8;
+  --lembut: #e3efeb;
+}
+
+html { background: var(--latar); }
+
+body {
+  background: var(--kartu);
+  margin: 24px auto;
+  padding: 24px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+h1, h2 { color: var(--utama); }
+
+/* Navbar */
+.navbar .menu a:hover { background: var(--lembut); }
+.navbar .menu a.aktif:hover { background: var(--utama); }
+
+/* Form */
+input, select {
+  border: 1px solid var(--garis);
+  border-radius: 6px;
+}
+input:focus, select:focus, button:focus, a:focus {
+  outline: 3px solid var(--utama);
+  outline-offset: 1px;
+}
+
+/* Tombol */
+button, .tombol { transition: opacity 0.2s; }
+button:hover, .tombol:hover { opacity: 0.85; }
+
+/* Tabel */
+table { border-radius: 8px; overflow: hidden; }
+th, td { border-color: var(--garis); }
+th { background: var(--lembut); color: var(--utama); }
+tbody tr:nth-child(even) { background: #f6faf8; }
+
+/* Kartu anggota */
+.anggota { background: #f6faf8; border-color: var(--garis); }
+
+/* Layar HP */
+@media (max-width: 480px) {
+  body { margin: 0; border-radius: 0; box-shadow: none; }
+  h1 { font-size: 1.8rem; }
+}
