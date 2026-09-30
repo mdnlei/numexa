@@ -11,7 +11,7 @@
       max-width: 640px;
       margin: 60px auto;
       padding: 0 16px;
-      line-height: 1;
+      line-height: 1.4;
     }
     h1 {
   font-size: clamp(2.8rem, 12vw, 4.5rem);
@@ -51,6 +51,15 @@ h2 { font-weight: normal; margin: 2px 0 0; }
     }
     .navbar .menu a.aktif { background: #0f6b5c; color: white; }
   .isi { text-align: justify; hyphens: auto; }
+    /* Khusus desktop: rata kiri */
+@media (min-width: 900px) {
+  body { text-align: left; }
+  .isi {
+    text-align: left;
+    font-size: 0.95rem;
+    max-width: 520px;
+  }
+}
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
