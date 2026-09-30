@@ -4,7 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kalkulator | NUMÉXA</title>
-  .navbar {
+  <style>
+    body { font-family: Georgia, serif; max-width: 760px; margin: 30px auto; padding: 0 16px; line-height: 1.5; }
+    h1 { margin-bottom: 4px; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; }
+    button { margin-top: 16px; padding: 10px 20px; font: inherit; background: #0f6b5c; color: white; border: 0; border-radius: 6px; cursor: pointer; }
+    #pesan { color: #b3261e; font-weight: bold; }
+    #hasil { display: none; margin-top: 24px; }
+    .besar { font-size: 1.6rem; font-weight: bold; color: #0f6b5c; }
+    .gulir { overflow-x: auto; }
+    table { border-collapse: collapse; width: 100%; min-width: 560px; }
+    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: right; }
+    th { background: #e3efeb; }
+    td:first-child, th:first-child { text-align: center; }
+    .navbar {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -25,22 +39,8 @@
       text-decoration: none;
     }
     .navbar .menu a.aktif { background: #0f6b5c; color: white; }
-  <style>
-    <link rel="stylesheet" href="style.css">
-    body { font-family: Georgia, serif; max-width: 760px; margin: 30px auto; padding: 0 16px; line-height: 1.5; }
-    h1 { margin-bottom: 4px; }
-    label { display: block; margin-top: 12px; font-weight: bold; }
-    input, select { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; }
-    button { margin-top: 16px; padding: 10px 20px; font: inherit; background: #0f6b5c; color: white; border: 0; border-radius: 6px; cursor: pointer; }
-    #pesan { color: #b3261e; font-weight: bold; }
-    #hasil { display: none; margin-top: 24px; }
-    .besar { font-size: 1.6rem; font-weight: bold; color: #0f6b5c; }
-    .gulir { overflow-x: auto; }
-    table { border-collapse: collapse; width: 100%; min-width: 560px; }
-    th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: right; }
-    th { background: #e3efeb; }
-    td:first-child, th:first-child { text-align: center; }
   </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <nav class="navbar">
