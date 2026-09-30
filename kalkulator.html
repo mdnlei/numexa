@@ -8,95 +8,130 @@
     body { font-family: Georgia, serif; max-width: 760px; margin: 30px auto; padding: 0 16px; line-height: 1.5; }
     h1 { margin-bottom: 4px; }
     label { display: block; margin-top: 12px; font-weight: bold; }
-    input, select { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; }
+    input[type=number], select { width: 100%; padding: 8px; font: inherit; box-sizing: border-box; }
+    .cek { display: flex; align-items: center; gap: 8px; font-weight: normal; }
     button { margin-top: 16px; padding: 10px 20px; font: inherit; background: #0f6b5c; color: white; border: 0; border-radius: 6px; cursor: pointer; }
+    button.sekunder { background: transparent; color: #0f6b5c; border: 1px solid #0f6b5c; }
     #pesan { color: #b3261e; font-weight: bold; }
-    #hasil { display: none; margin-top: 24px; }
-    .besar { font-size: 1.6rem; font-weight: bold; color: #0f6b5c; }
+    [hidden] { display: none !important; }
+    .data { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 16px; margin: 0 0 16px; }
+    .data div { background: #e3efeb; border-radius: 6px; padding: 8px 10px; }
+    .data dt { font-size: .8rem; color: #5b7470; }
+    .data dd { margin: 0; font-weight: bold; }
+    .besar { font-size: 1.8rem; font-weight: bold; color: #0f6b5c; }
+    .ringkas { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px; margin: 10px 0 16px; }
+    .ringkas div { border: 1px solid #cfdcd8; border-radius: 6px; padding: 8px 10px; }
+    .ringkas span { display: block; font-size: .8rem; color: #5b7470; }
     .gulir { overflow-x: auto; }
     table { border-collapse: collapse; width: 100%; min-width: 560px; }
     th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: right; }
     th { background: #e3efeb; }
     td:first-child, th:first-child { text-align: center; }
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-      padding-bottom: 12px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid #ccc;
-      text-align: left;
-    }
-    .navbar .merek { font-weight: bold; font-size: 1.2rem; text-decoration: none; color: #0f6b5c; }
-    .navbar .menu { display: flex; gap: 8px; flex-wrap: wrap; }
-    .navbar .menu a {
-      padding: 8px 14px;
-      border: 1px solid #0f6b5c;
-      border-radius: 6px;
-      color: #0f6b5c;
-      text-decoration: none;
-    }
-    .navbar .menu a.aktif { background: #0f6b5c; color: white; }
+    .aksi { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+    .aksi button { margin-top: 0; }
+    svg { width: 100%; height: auto; display: block; }
+    .p { fill: #0f6b5c; } .b { fill: #d98e2b; }
+    .legenda { font-size: .85rem; margin-top: 4px; }
+    .legenda i { display: inline-block; width: 12px; height: 12px; margin: 0 4px 0 10px; vertical-align: middle; }
+    @media (max-width: 480px) { .data { grid-template-columns: 1fr; } }
+    @media print { .kembali, .aksi { display: none; } }
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-     <a class="kembali" href="index.html">← Kembali ke beranda</a>
+  <a class="kembali" href="index.html">← Kembali ke beranda</a>
   <h1>Kalkulator Anuitas</h1>
 
-  <label for="satuan">Satuan periode</label>
-  <select id="satuan">
-    <option>Hari</option>
-    <option>Minggu</option>
-    <option selected>Bulan</option>
-    <option>Kuartal</option>
-    <option>Semester</option>
-    <option>Tahun</option>
-  </select>
+  <!-- ===== FORMULIR INPUT ===== -->
+  <form id="formulir" novalidate>
+    <label for="satuan">Satuan periode</label>
+    <select id="satuan">
+      <option>Hari</option><option>Minggu</option><option selected>Bulan</option>
+      <option>Kuartal</option><option>Semester</option><option>Tahun</option>
+    </select>
 
-  <label for="pinjaman">Jumlah pinjaman (Rp)</label>
-  <input id="pinjaman" type="number" min="0" step="any" placeholder="contoh: 10000000">
+    <label for="mata">Mata uang</label>
+    <select id="mata">
+      <option value="IDR">Rupiah (Rp)</option>
+      <option value="USD">Dolar AS ($)</option>
+      <option value="EUR">Euro (€)</option>
+      <option value="NONE">Tanpa simbol</option>
+    </select>
 
-  <label for="bunga" id="labelBunga">Suku bunga (% per Bulan)</label>
-  <input id="bunga" type="number" min="0" step="any" placeholder="contoh: 1.5">
+    <label for="pinjaman">Jumlah pinjaman</label>
+    <input id="pinjaman" type="number" min="0" step="any" placeholder="contoh: 10000000">
 
-  <label for="lama" id="labelLama">Lama pinjaman (jumlah Bulan)</label>
-  <input id="lama" type="number" min="1" step="1" placeholder="contoh: 24">
+    <label for="bunga" id="labelBunga">Suku bunga (% per Bulan)</label>
+    <input id="bunga" type="number" min="0" step="any" placeholder="contoh: 1.5">
 
-  <label for="mode">Pembulatan</label>
-  <select id="mode">
-    <option value="desimal">Desimal (sisa akhir tepat 0)</option>
-    <option value="bulat">Dibulatkan (sisa akhir mendekati 0)</option>
-  </select>
+    <label for="lama" id="labelLama">Lama pinjaman (jumlah Bulan)</label>
+    <input id="lama" type="number" min="1" step="1" placeholder="contoh: 24">
 
-  <button id="hitung" type="button">Hitung</button>
-  <p id="pesan"></p>
+    <label for="waktu">Waktu pembayaran angsuran</label>
+    <select id="waktu">
+      <option value="akhir">Di akhir periode (anuitas biasa)</option>
+      <option value="awal">Di awal periode (anuitas jatuh tempo)</option>
+    </select>
 
-  <div id="hasil">
-    <div>Angsuran per <span class="unit"></span>:</div>
+    <label for="mode">Pembulatan</label>
+    <select id="mode">
+      <option value="desimal">Desimal (sisa akhir tepat 0)</option>
+      <option value="bulat">Dibulatkan (sisa akhir mendekati 0)</option>
+    </select>
+
+    <label class="cek"><input id="grafik" type="checkbox" checked> Tampilkan grafik pokok vs bunga</label>
+
+    <button type="submit">Hitung</button>
+    <p id="pesan"></p>
+  </form>
+
+  <!-- ===== HALAMAN HASIL ===== -->
+  <section id="hasil" hidden>
+    <h2>Data yang dimasukkan</h2>
+    <dl class="data" id="data"></dl>
+
+    <h2>Hasil</h2>
+    <div>Angsuran per <span id="unit"></span>:</div>
     <div class="besar" id="angsuran"></div>
+    <div class="ringkas" id="ringkas"></div>
+
+    <div id="areaGrafik" hidden>
+      <h2>Grafik</h2>
+      <div id="svgGrafik"></div>
+      <div class="legenda"><i class="p"></i>Pokok<i class="b"></i>Bunga</div>
+    </div>
+
+    <h2>Tabel amortisasi</h2>
     <div class="gulir">
       <table>
         <thead>
           <tr>
             <th id="kolomPeriode">Bulan</th>
-            <th>Principal payment (Rp)</th>
-            <th>Interest payment (Rp)</th>
-            <th>Annuity (Rp)</th>
-            <th>Remaining balance (Rp)</th>
+            <th class="jdl">Principal payment</th>
+            <th class="jdl">Interest payment</th>
+            <th class="jdl">Annuity</th>
+            <th class="jdl">Remaining balance</th>
           </tr>
         </thead>
         <tbody id="isiTabel"></tbody>
       </table>
     </div>
-  </div>
+
+    <div class="aksi">
+      <button type="button" id="reset">Reset</button>
+      <button type="button" id="unduh" class="sekunder">Unduh CSV</button>
+      <button type="button" id="cetak" class="sekunder">Cetak</button>
+    </div>
+  </section>
 
   <script>
     const $ = id => document.getElementById(id);
+    const MATA = {
+      IDR: { s: "Rp", loc: "id-ID" }, USD: { s: "$", loc: "en-US" },
+      EUR: { s: "€", loc: "de-DE" }, NONE: { s: "", loc: "id-ID" }
+    };
+    let barisCSV = [];
 
-    // Ubah label ikut satuan periode
     function ubahLabel() {
       const u = $("satuan").value;
       $("labelBunga").textContent = "Suku bunga (% per " + u + ")";
@@ -104,48 +139,107 @@
     }
     $("satuan").addEventListener("change", ubahLabel);
 
+    $("formulir").addEventListener("submit", e => { e.preventDefault(); hitung(); });
+    $("formulir").addEventListener("reset", () => setTimeout(ubahLabel, 0));
+
     function hitung() {
       const P = parseFloat($("pinjaman").value);
-      const i = parseFloat($("bunga").value) / 100;
+      const r = parseFloat($("bunga").value);
       const n = parseInt($("lama").value);
       const u = $("satuan").value;
+      const awal = $("waktu").value === "awal";
       const bulat = $("mode").value === "bulat";
+      const m = MATA[$("mata").value];
       $("pesan").textContent = "";
 
-      if (!(P > 0) || isNaN(i) || i < 0 || !(n >= 1)) {
-        $("pesan").textContent = "Isi semua kolom dengan angka yang benar.";
-        $("hasil").style.display = "none";
+      if (!(P > 0) || isNaN(r) || r < 0 || !(n >= 1) || n > 1200) {
+        $("pesan").textContent = "Isi semua kolom dengan angka yang benar (lama pinjaman 1 sampai 1200).";
         return;
       }
+      const i = r / 100;
 
-      // Rumus angsuran tetap
+      // Angsuran tetap (bayar di awal: dibagi (1 + i))
       let A = i === 0 ? P / n : (P * i) / (1 - Math.pow(1 + i, -n));
+      if (awal) A = A / (1 + i);
       if (bulat) A = Math.round(A);
 
-      const fmt = x => x.toLocaleString("id-ID", {
-        minimumFractionDigits: bulat ? 0 : 2,
-        maximumFractionDigits: bulat ? 0 : 2
+      const fmt = x => (m.s ? m.s + " " : "") + x.toLocaleString(m.loc, {
+        minimumFractionDigits: bulat ? 0 : 2, maximumFractionDigits: bulat ? 0 : 2
       });
 
-      let sisa = P;
-      let html = "";
+      let sisa = P, totalBunga = 0, html = "", bars = "";
+      barisCSV = [["sep=;"], ["Periode", "Principal payment", "Interest payment", "Annuity", "Remaining balance"]];
+      const W = 600, H = 150, bw = W / n;
+
       for (let k = 1; k <= n; k++) {
-        let bunga = sisa * i;
+        let bunga = (awal && k === 1) ? 0 : sisa * i;
         if (bulat) bunga = Math.round(bunga);
         const pokok = A - bunga;
-        sisa = sisa - pokok;
+        sisa -= pokok;
         if (Math.abs(sisa) < 1e-6) sisa = 0;
-        html += "<tr><td>" + k + "</td><td>" + fmt(pokok) + "</td><td>" +
-                fmt(bunga) + "</td><td>" + fmt(A) + "</td><td>" + fmt(sisa) + "</td></tr>";
+        totalBunga += bunga;
+
+        html += "<tr><td>" + k + "</td><td>" + fmt(pokok) + "</td><td>" + fmt(bunga) +
+                "</td><td>" + fmt(A) + "</td><td>" + fmt(sisa) + "</td></tr>";
+
+        const hb = Math.max(0, Math.min(H, bunga / A * H));
+        const hp = Math.max(0, Math.min(H - hb, pokok / A * H));
+        const x = ((k - 1) * bw).toFixed(2), w = Math.max(bw - 0.5, 0.3).toFixed(2);
+        bars += '<rect class="b" x="' + x + '" y="' + (H - hb).toFixed(2) + '" width="' + w + '" height="' + hb.toFixed(2) + '"/>' +
+                '<rect class="p" x="' + x + '" y="' + (H - hb - hp).toFixed(2) + '" width="' + w + '" height="' + hp.toFixed(2) + '"/>';
+
+        const d = v => bulat ? String(Math.round(v)) : v.toFixed(2);
+        barisCSV.push([k, d(pokok), d(bunga), d(A), d(sisa)]);
       }
 
-      document.querySelectorAll(".unit").forEach(e => e.textContent = u);
+      // Data input sebagai teks
+      const item = (j, v) => "<div><dt>" + j + "</dt><dd>" + v + "</dd></div>";
+      $("data").innerHTML =
+        item("Jumlah pinjaman", fmt(P)) +
+        item("Suku bunga", r + "% per " + u) +
+        item("Lama pinjaman", n + " " + u) +
+        item("Waktu pembayaran", awal ? "Di awal periode" : "Di akhir periode") +
+        item("Pembulatan", bulat ? "Dibulatkan" : "Desimal") +
+        item("Mata uang", $("mata").selectedOptions[0].text);
+
+      $("unit").textContent = u;
       $("kolomPeriode").textContent = u;
-      $("angsuran").textContent = "Rp " + fmt(A);
+      document.querySelectorAll(".jdl").forEach(el => {
+        el.textContent = el.textContent.replace(/ \(.*\)$/, "") + (m.s ? " (" + m.s + ")" : "");
+      });
+      $("angsuran").textContent = fmt(A);
+      $("ringkas").innerHTML =
+        '<div><span>Total dibayar</span><b>' + fmt(A * n) + '</b></div>' +
+        '<div><span>Total bunga</span><b>' + fmt(totalBunga) + '</b></div>' +
+        '<div><span>Sisa pinjaman akhir</span><b>' + fmt(sisa) + '</b></div>';
+
+      $("areaGrafik").hidden = !$("grafik").checked;
+      $("svgGrafik").innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="Grafik pokok dan bunga per periode">' + bars + '</svg>';
       $("isiTabel").innerHTML = html;
-      $("hasil").style.display = "block";
+
+      // Sembunyikan form, tampilkan hasil
+      $("formulir").hidden = true;
+      $("hasil").hidden = false;
+      window.scrollTo(0, 0);
     }
-    $("hitung").addEventListener("click", hitung);
+
+    $("reset").addEventListener("click", () => {
+      $("formulir").reset();
+      $("hasil").hidden = true;
+      $("formulir").hidden = false;
+      window.scrollTo(0, 0);
+    });
+
+    $("cetak").addEventListener("click", () => window.print());
+
+    $("unduh").addEventListener("click", () => {
+      const isi = "\ufeff" + barisCSV.map(b => b.join(";")).join("\r\n");
+      const url = URL.createObjectURL(new Blob([isi], { type: "text/csv;charset=utf-8" }));
+      const a = document.createElement("a");
+      a.href = url; a.download = "numexa-tabel.csv";
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    });
   </script>
 </body>
 </html>
