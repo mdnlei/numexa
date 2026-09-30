@@ -81,12 +81,27 @@ tbody tr:nth-child(even) { background: #f6faf8; }
   background: var(--utama);
   color: white;
 }
-/* Kartu anggota dengan foto */
-.anggota { display: flex; align-items: center; gap: 16px; }
+/* Kartu anggota dengan foto (3:4) */
+.anggota {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
 .anggota .foto {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+  width: 150px;
+  aspect-ratio: 3 / 4;
   object-fit: cover;
+  border-radius: 10px;
   flex-shrink: 0;
+}
+.anggota .nama {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+  color: var(--utama);
+}
+.anggota .tugas { margin: 0; }
+
+@media (max-width: 480px) {
+  .anggota .foto { width: 105px; }
+  .anggota .nama { font-size: 1.3rem; }
 }
