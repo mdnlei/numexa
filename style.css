@@ -52,7 +52,13 @@ tbody tr:nth-child(even) { background: #f6faf8; }
 }
 /* Layar besar (laptop/desktop) */
 @media (min-width: 900px) {
-  body { max-width: 900px; }
+  html { background: var(--kartu); }
+  body {
+    max-width: 1000px;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 24px 40px;
+  }
   .navbar .menu a { padding: 10px 18px; }
 }
 /* Layar sangat besar */
