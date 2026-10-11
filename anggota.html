@@ -31,6 +31,57 @@
     .navbar .menu a.aktif { background: #0f6b5c; color: white; }
   </style>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Layout profil: foto di atas, nama dan penjelasan di bawahnya */
+    .anggota {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .anggota .foto {
+      display: block;
+      width: 180px;
+      max-width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      border-radius: 10px;
+      flex-shrink: 0;
+    }
+
+    .anggota .info {
+      width: 100%;
+    }
+
+    .anggota .nama {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 1.4rem;
+      color: var(--utama, #0f6b5c);
+    }
+
+    .anggota .tugas {
+      margin: 0;
+      text-align: justify;
+    }
+
+    @media (max-width: 480px) {
+      .anggota {
+        padding: 14px;
+        gap: 10px;
+      }
+
+      .anggota .foto {
+        width: 150px;
+      }
+
+      .anggota .nama {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <a class="kembali" href="index.html">← Kembali ke beranda</a>
