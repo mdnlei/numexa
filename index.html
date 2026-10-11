@@ -82,6 +82,33 @@ h2 { margin: 0 0 6px 0; }        /* jarak subjudul ke "By" */
         line-height: 1.4;
       }
     }
+
+    /* Navbar satu baris khusus layar HP */
+    @media (max-width: 600px) {
+      .navbar {
+        flex-wrap: nowrap;
+        gap: 4px;
+      }
+
+      .navbar .merek {
+        flex-shrink: 0;
+        font-size: 0.95rem;
+      }
+
+      .navbar .menu {
+        flex-wrap: nowrap;
+        gap: 3px;
+        min-width: 0;
+      }
+
+      .navbar .menu a {
+        flex-shrink: 0;
+        padding: 5px 4px;
+        font-size: 0.68rem;
+        white-space: nowrap;
+        border-radius: 4px;
+      }
+    }
   </style>
   <link rel="stylesheet" href="style.css">
 </head>
