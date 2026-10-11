@@ -14,12 +14,12 @@
       line-height: 1.4;
     }
     h1 {
-  font-size: clamp(2.8rem, 12vw, 4.5rem);
-  margin: 0;
-  line-height: 1;
-  letter-spacing: 2px;
-}
-h2 { font-weight: normal; margin: 2px 0 0; }
+      font-size: clamp(2.8rem, 12vw, 4.5rem);
+      margin: 0;
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+    h2 { font-weight: normal; margin: 2px 0 0; }
     .tombol {
       display: inline-block;
       margin-top: 24px;
@@ -50,21 +50,23 @@ h2 { font-weight: normal; margin: 2px 0 0; }
       text-decoration: none;
     }
     .navbar .menu a.aktif { background: #0f6b5c; color: white; }
-  .isi { text-align: justify; hyphens: auto; }
-    /* Khusus desktop: rata kiri */
-@media (min-width: 900px) {
-  body { text-align: left; }
-  .isi {
-    text-align: left;
-    font-size: 0.95rem;
-    max-width: 750px;
-  }
-}
-    /* PANEL JARAK LOBBY: ubah angkanya sampai pas */
-h1 { margin: 0 0 0 0; }          /* atas kanan bawah kiri */
-h2 { margin: 0 0 6px 0; }        /* jarak subjudul ke "By" */
-.oleh { margin: 0 0 24px 0; }    /* jarak "By" ke paragraf */
-.isi  { margin: 0; line-height: 1.6; }  /* jarak antar baris paragraf */
+    .isi { text-align: justify; hyphens: auto; }
+
+    /* Khusus desktop: pertahankan tata letak yang sudah ada */
+    @media (min-width: 900px) {
+      body { text-align: left; }
+      .isi {
+        text-align: left;
+        font-size: 0.95rem;
+        max-width: 750px;
+      }
+    }
+
+    /* Pengaturan jarak bagian utama */
+    h1 { margin: 0; }
+    h2 { margin: 0 0 6px 0; }
+    .oleh { margin: 0 0 24px 0; }
+    .isi { margin: 0; line-height: 1.6; }
 
     /* Penyesuaian layar kecil: desktop tetap seperti semula */
     @media (max-width: 899px) {
@@ -73,41 +75,62 @@ h2 { margin: 0 0 6px 0; }        /* jarak subjudul ke "By" */
         line-height: 1.2;
         margin-top: 1px;
       }
-
       .isi {
         width: 100%;
-        max-width: 39ch;
+        max-width: 34ch;
         margin-inline: auto;
         font-size: 0.94rem;
         line-height: 1.4;
       }
     }
 
-    /* Navbar satu baris khusus layar HP */
-    @media (max-width: 600px) {
-      .navbar {
-        flex-wrap: nowrap;
-        gap: 4px;
-      }
-
-      .navbar .merek {
-        flex-shrink: 0;
-        font-size: 0.95rem;
-      }
-
-      .navbar .menu {
-        flex-wrap: nowrap;
-        gap: 3px;
-        min-width: 0;
-      }
-
-      .navbar .menu a {
-        flex-shrink: 0;
-        padding: 5px 4px;
-        font-size: 0.68rem;
-        white-space: nowrap;
-        border-radius: 4px;
-      }
+    /* Dokumentasi vertikal Perjalanan NUMÉXA */
+    .perjalanan {
+      margin-top: 96px;
+      text-align: left;
+    }
+    .perjalanan-pembuka {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .perjalanan-pembuka h2 {
+      color: #0f6b5c;
+      font-size: clamp(1.6rem, 5vw, 2rem);
+      line-height: 1.2;
+      margin: 0 0 8px;
+      font-weight: bold;
+    }
+    .perjalanan-pembuka p {
+      margin: 0;
+      color: #5b6663;
+      font-size: 0.96rem;
+    }
+    .momen-numexa {
+      margin: 0 0 32px;
+    }
+    .momen-numexa img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #e3efeb;
+    }
+    .momen-numexa h3 {
+      margin: 12px 0 5px;
+      color: #0f6b5c;
+      font-size: 1.08rem;
+    }
+    .momen-numexa p {
+      margin: 0;
+      line-height: 1.5;
+      color: #454d4a;
+      font-size: 0.94rem;
+    }
+    @media (max-width: 899px) {
+      .perjalanan { margin-top: 80px; }
+      .perjalanan-pembuka { margin-bottom: 26px; }
+      .momen-numexa { margin-bottom: 28px; }
     }
   </style>
   <link rel="stylesheet" href="style.css">
@@ -122,6 +145,7 @@ h2 { margin: 0 0 6px 0; }        /* jarak subjudul ke "By" */
       <a href="tentang.html">Tentang</a>
     </div>
   </nav>
+
   <h1>NUMÉXA</h1>
   <h2>Hitung Cerdas. Rencanakan Lebih Jelas.</h2>
   <p class="oleh">Oleh Kelompok 1, XI-4 SMAN 1 Tasikmalaya</p>
@@ -129,16 +153,59 @@ h2 { margin: 0 0 6px 0; }        /* jarak subjudul ke "By" */
     NUMÉXA merupakan kalkulator anuitas yang dikembangkan oleh Kelompok 1
     dalam rangka Proyek Matematika Kelas XI-4 SMAN 1 Tasikmalaya, yang
     beranggotakan Nabil sebagai ketua sekaligus pengembang website, Wanda,
-    Salwa, Cintaku, dan Bagas. Atas inisiatif dan gagasan Nabil, NUMÉXA 
-    dirancang tidak hanya sebagai bagian dari tugas proyek, tetapi sebagai 
-    sebuah website yang dibangun secara serius dengan visi untuk menjadi 
-    platform resmi yang dapat dipublikasikan dan dikembangkan lebih lanjut 
-    di masa mendatang. NUMÉXA dirancang untuk mempermudah pengguna dalam 
-    melakukan perhitungan anuitas serta memberikan hasil yang lengkap, 
-    jelas, dan mudah dipahami melalui pengalaman digital yang modern dan 
+    Salwa, Cintaku, dan Bagas. Atas inisiatif dan gagasan Nabil, NUMÉXA
+    dirancang tidak hanya sebagai bagian dari tugas proyek, tetapi sebagai
+    sebuah website yang dibangun secara serius dengan visi untuk menjadi
+    platform resmi yang dapat dipublikasikan dan dikembangkan lebih lanjut
+    di masa mendatang. NUMÉXA dirancang untuk mempermudah pengguna dalam
+    melakukan perhitungan anuitas serta memberikan hasil yang lengkap,
+    jelas, dan mudah dipahami melalui pengalaman digital yang modern dan
     fungsional.
   </p>
 
   <a class="tombol" href="kalkulator.html">Mulai Hitung</a>
+
+  <section class="perjalanan" aria-labelledby="judul-perjalanan">
+    <header class="perjalanan-pembuka">
+      <h2 id="judul-perjalanan">Perjalanan NUMÉXA</h2>
+      <p>Dari sebuah ide, menjadi sesuatu yang nyata.</p>
+    </header>
+
+    <article class="momen-numexa">
+      <img src="1.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 1">
+      <h3>01 — Awal Mula</h3>
+      <p>Awal dari gagasan dan perencanaan NUMÉXA.</p>
+    </article>
+
+    <article class="momen-numexa">
+      <img src="2.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 2">
+      <h3>02 — Menyusun Konsep</h3>
+      <p>Proses merancang konsep dan menentukan arah pengembangan website.</p>
+    </article>
+
+    <article class="momen-numexa">
+      <img src="3.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 3">
+      <h3>03 — Proses Pengembangan</h3>
+      <p>Momen ketika rancangan mulai diwujudkan menjadi website.</p>
+    </article>
+
+    <article class="momen-numexa">
+      <img src="4.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 4">
+      <h3>04 — Membangun Fitur</h3>
+      <p>Pengembangan fitur agar NUMÉXA dapat digunakan dengan mudah.</p>
+    </article>
+
+    <article class="momen-numexa">
+      <img src="5.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 5">
+      <h3>05 — Penyempurnaan</h3>
+      <p>Meninjau kembali tampilan dan fungsi sebelum versi pertama dirilis.</p>
+    </article>
+
+    <article class="momen-numexa">
+      <img src="6.jpg" alt="Dokumentasi perjalanan NUMÉXA bagian 6">
+      <h3>06 — NUMÉXA V1</h3>
+      <p>Langkah awal NUMÉXA sebagai produk digital dari Kelompok 1.</p>
+    </article>
+  </section>
 </body>
 </html>
